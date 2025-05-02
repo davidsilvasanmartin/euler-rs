@@ -1,9 +1,27 @@
-// Added for potentially displaying solutions better later
-use std::fmt::Display;
+use num_bigint::BigUint;
+use std::fmt;
 use std::time::Instant;
 
 pub mod p0020;
-// Add more `pub mod pXXXX;` lines here for future problems
+pub mod p0025;
+
+/// Enum to represent the possible result types of a problem
+#[derive(Debug)]
+pub enum ProblemResult {
+    I128(i128),
+    U128(u128),
+    BigUint(BigUint),
+}
+
+impl fmt::Display for ProblemResult {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            ProblemResult::I128(val) => write!(f, "{}", val),
+            ProblemResult::U128(val) => write!(f, "{}", val),
+            ProblemResult::BigUint(val) => write!(f, "{}", val),
+        }
+    }
+}
 
 pub trait Problem {
     /**
@@ -13,7 +31,7 @@ pub trait Problem {
     method. Users of the trait should typically call `solve_and_report`.
      */
     #[doc(hidden)]
-    fn run(&self) -> i128;
+    fn run(&self) -> ProblemResult;
 
     /**
     Runs the problem's solution, measures execution time, and prints the result.

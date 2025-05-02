@@ -32,6 +32,7 @@ fn main() {
 
     match args[1].parse::<u32>() {
         Ok(20) => problems::p0020::Solution.solve_and_report(),
+        Ok(25) => problems::p0025::Solution.solve_and_report(),
         Ok(num) => {
             eprintln!("Problem {} not implemented yet", num);
             std::process::exit(1);
