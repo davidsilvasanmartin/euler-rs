@@ -21,6 +21,7 @@ making things inside the problems module accessible via the path "problems::..."
 This line basically makes the namespace "problems" available.
 */
 mod problems;
+mod sequences;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
