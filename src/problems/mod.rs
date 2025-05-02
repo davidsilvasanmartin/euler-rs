@@ -1,4 +1,9 @@
+// Added for potentially displaying solutions better later
+use std::fmt::Display;
 use std::time::Instant;
+
+pub mod p0020;
+// Add more `pub mod pXXXX;` lines here for future problems
 
 pub trait Problem {
     /**

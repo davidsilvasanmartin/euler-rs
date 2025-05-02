@@ -1,4 +1,5 @@
-use crate::problem::Problem;
+use super::Problem;
+use crate::numbers::digits_sum;
 
 pub struct Solution;
 
@@ -7,6 +8,6 @@ https://projecteuler.net/problem=20
 */
 impl Problem for Solution {
     fn run(&self) -> i128 {
-        11
+        digits_sum(999999999999i128)
     }
 }
