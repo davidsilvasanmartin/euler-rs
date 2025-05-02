@@ -1,5 +1,5 @@
 use super::Problem;
-use crate::numbers::digits_sum;
+use crate::numbers::digits_sum::digits_sum;
 
 pub struct Solution;
 
