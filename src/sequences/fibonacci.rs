@@ -2,8 +2,8 @@ use num_bigint::BigUint;
 use num_traits::{One, Zero};
 
 pub struct Fibonacci {
+    prev: BigUint,
     curr: BigUint,
-    next: BigUint,
     index: u128,
 }
 
@@ -12,9 +12,8 @@ impl Fibonacci {
     /// Starts with F_1 = 1, F_2 = 1
     pub fn new() -> Self {
         Fibonacci {
-            // Start so that the first call to next() returns F_1 = 1
-            curr: BigUint::zero(),
-            next: BigUint::one(),
+            prev: BigUint::zero(),
+            curr: BigUint::one(),
             index: 0,
         }
     }
@@ -27,9 +26,19 @@ impl Iterator for Fibonacci {
     fn next(&mut self) -> Option<Self::Item> {
         self.index += 1;
 
+        // Special case: the first time next() is called, return a hardcoded value
+        // instead of starting calculations. The previous solution was holding F_{i+1}
+        // in memory when returning F_i. This is far from ideal, because F_{i+1} may
+        // never be used, but we are storing it in memory. The current solution just
+        // keeps F_i and F_{i-1} in memory when returning F_i. To make this change
+        // possible, I had to implement code for this special case when the index is 1
+        if self.index == 1 {
+            return Some((self.index, BigUint::one()));
+        }
+
         // Standard Fibonacci calculation using swap
-        let next_val = &self.curr + &self.next;
-        self.curr = std::mem::replace(&mut self.next, next_val);
+        let next_val = &self.prev + &self.curr;
+        self.prev = std::mem::replace(&mut self.curr, next_val);
 
         Some((self.index, self.curr.clone()))
     }
@@ -54,5 +63,15 @@ mod tests {
         assert_eq!(fib.next(), Some((9, 34u32.to_biguint().unwrap())));
         assert_eq!(fib.next(), Some((10, 55u32.to_biguint().unwrap())));
         assert_eq!(fib.next(), Some((11, 89u32.to_biguint().unwrap())));
+        assert_eq!(fib.next(), Some((12, 144u32.to_biguint().unwrap())));
+        assert_eq!(fib.next(), Some((13, 233u32.to_biguint().unwrap())));
+        assert_eq!(fib.next(), Some((14, 377u32.to_biguint().unwrap())));
+        assert_eq!(fib.next(), Some((15, 610u32.to_biguint().unwrap())));
+        assert_eq!(fib.next(), Some((16, 987u32.to_biguint().unwrap())));
+        assert_eq!(fib.next(), Some((17, 1597u32.to_biguint().unwrap())));
+        assert_eq!(fib.next(), Some((18, 2584u32.to_biguint().unwrap())));
+        assert_eq!(fib.next(), Some((19, 4181u32.to_biguint().unwrap())));
+        assert_eq!(fib.next(), Some((20, 6765u32.to_biguint().unwrap())));
+        assert_eq!(fib.next(), Some((21, 10946u32.to_biguint().unwrap())));
     }
 }
