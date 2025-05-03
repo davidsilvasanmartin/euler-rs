@@ -2,6 +2,7 @@ use lazy_static::lazy_static;
 use num_bigint::{BigUint, ToBigUint};
 use rayon::prelude::*;
 
+/// List of primes as a string. See https://t5k.org/lists/small/millions/
 const PRIMES_STR: &str = include_str!("./primes.txt");
 
 lazy_static! {

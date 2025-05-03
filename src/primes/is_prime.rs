@@ -66,4 +66,12 @@ mod test_is_prime {
         assert_eq!(is_prime(&15485867.to_biguint().unwrap()), true);
         assert_eq!(is_prime(&15485877.to_biguint().unwrap()), false);
     }
+
+    #[test]
+    fn test_is_prime_large() {
+        // Exactly the square of the last number in our sieve list
+        assert_eq!(is_prime(&1053187018782649u64.to_biguint().unwrap()), false);
+        // Larger than the square of the last number in our sieve list
+        assert_eq!(is_prime(&1053187041615329u64.to_biguint().unwrap()), true);
+    }
 }
