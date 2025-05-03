@@ -10,6 +10,7 @@ use std::env;
 
 
 mod numbers;
+mod primes;
 /**
 "mod problems" is a module declaration. It tells the Rust compiler that
 there is a module named "problems" and that it should look for its definition.
